@@ -90,6 +90,7 @@ The `report-coverage` CLI has some options to customize behavior:
     -b, --branch [value]         Base branch to use if not PR (defaults to "master")
     -j, --coverage-json [value]  Relative path to istanbul coverage JSON (defaults to "coverage/coverage-final.json")
     -r, --coverage-root [value]  Relative path to coverage html root (for artifact links) (defaults to "coverage/lcov-report")
+    -c, --coverage-method [value]Method to calculate coverage ("statement", "branch", defaults to "simple")
     -h, --help                   Output usage information
     -v, --version                Output the version number
 ```
