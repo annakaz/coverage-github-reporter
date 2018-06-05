@@ -34,14 +34,15 @@ exports.postComment = function postComment ({
   coverageJsonFilename = 'coverage/coverage-final.json',
   coverageHtmlRoot = 'coverage/lcov-report',
   defaultBaseBranch = 'master',
+  coverageMethod = 'simple',
   root = process.cwd()
 }) {
   const bot = Bot.create()
 
-  const coverage = parseFile(root, resolve(root, coverageJsonFilename))
+  const coverage = parseFile(root, resolve(root, coverageJsonFilename, coverageMethod))
 
   const branch = bot.getBaseBranch(defaultBaseBranch)
-  const { priorCoverage, priorBuild } = bot.getPriorBuild(branch, coverageJsonFilename)
+  const { priorCoverage, priorBuild } = bot.getPriorBuild(branch, coverageJsonFilename, coverageMethod)
 
   if (!priorCoverage) {
     console.log(`No prior coverage found`)

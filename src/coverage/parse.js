@@ -14,19 +14,32 @@ function calculateCoverage (stats) {
   return (stats.covered + stats.skipped) / stats.total * 100
 }
 
-function getSimpleCoverage (summary) {
+function getSimpleCoverage (summary, mode = 'simple') {
   const { statements, branches } = summary.toJSON()
   const statementsCoverage = calculateCoverage(statements)
   if (branches.total === 0) {
     return { percent: statementsCoverage }
   }
   const branchesCoverage = calculateCoverage(branches)
-  return {
-    percent: statementsCoverage * 0.75 + branchesCoverage * 0.25
-  }
+
+  if (mode == 'simple') {
+
+  } else if (mode == 'statements') {
+    return { 
+      percent: statementsCoverage 
+    }
+  } else if (mode == 'branches') {
+    return { 
+      percent: branchesCoverage 
+    }
+  } else {
+    // Return simple code coverage if not recognized
+    return {
+      percent: statementsCoverage * 0.75 + branchesCoverage * 0.25
+    }
 }
 
-exports.coverageJsonToReport = function (json, base) {
+exports.coverageJsonToReport = function (json, base, coverageMethod) {
   const map = libCoverage.createCoverageMap(json)
   const globalSummary = libCoverage.createCoverageSummary()
 
@@ -71,7 +84,7 @@ exports.coverageJsonToReport = function (json, base) {
   return report
 }
 
-exports.parseFile = function (base, coveragePath) {
+exports.parseFile = function (base, coveragePath, coverageMethod) {
   const json = JSON.parse(readFileSync(coveragePath, 'utf8'))
-  return exports.coverageJsonToReport(json, base)
+  return exports.coverageJsonToReport(json, base, coverageMethod)
 }

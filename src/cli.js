@@ -5,11 +5,13 @@ const args = require('args')
 args
   .option(['j', 'coverage-json'], 'Relative path to istanbul coverage JSON', 'coverage/coverage-final.json')
   .option(['h', 'coverage-html'], 'Relative path to coverage html root (for artifact links)', 'coverage/lcov-report')
+  .option(['c', 'coverage-method'], 'Method to calculate coverage (statement, branch, simple)', 'simple')
   .option(['b', 'branch'], 'Base branch to use if not PR', 'master')
 
 const {
   coverageJson,
   coverageHtml,
+  coverageMethod,
   branch
 } = args.parse(process.argv)
 

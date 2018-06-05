@@ -58,7 +58,7 @@ Bot.prototype.getBaseBranch = function (defaultBaseBranch) {
   return defaultBaseBranch
 }
 
-Bot.prototype.getPriorBuild = function (branch, coverageJsonFilename) {
+Bot.prototype.getPriorBuild = function (branch, coverageJsonFilename, coverageMethod) {
   // Get latest builds for branch
   const baseBranchBuilds = this.latestBranchBuilds(branch, BUILD_RETRIEVAL_LIMIT)
   if (baseBranchBuilds) {
@@ -95,7 +95,7 @@ Bot.prototype.getPriorBuild = function (branch, coverageJsonFilename) {
         throw new Error(`Could not load artifact from ${artifact.url}`)
       }
       const base = process.env.CIRCLE_WORKING_DIRECTORY.replace(/~\//, process.env.HOME + '/')
-      const priorCoverage = coverageJsonToReport(coverageJson, base)
+      const priorCoverage = coverageJsonToReport(coverageJson, base, coverageMethod)
       const priorBuild = buildNum
       console.log(`Loaded prior coverage from build ${priorBuild} artifacts`)
       return { priorCoverage, priorBuild }
