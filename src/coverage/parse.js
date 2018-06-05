@@ -23,20 +23,24 @@ function getSimpleCoverage (summary, mode = 'simple') {
   const branchesCoverage = calculateCoverage(branches)
 
   if (mode == 'simple') {
-
-  } else if (mode == 'statements') {
+    return {
+      percent: statementsCoverage * 0.75 + branchesCoverage * 0.25
+    }
+  } else if (mode == 'statement') {
     return { 
       percent: statementsCoverage 
     }
-  } else if (mode == 'branches') {
+  } else if (mode == 'branch') {
     return { 
       percent: branchesCoverage 
     }
   } else {
     // Return simple code coverage if not recognized
+    console.error('Coverage method', mode, 'not yet implemented.')
     return {
       percent: statementsCoverage * 0.75 + branchesCoverage * 0.25
     }
+  }
 }
 
 exports.coverageJsonToReport = function (json, base, coverageMethod) {
